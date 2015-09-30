@@ -61,6 +61,7 @@ module JavaBuildpack::Container
 
     # @macro base_component_compile
     def compile
+      download_maven
       download_tomcat
       download_lifecycle
       download_logging
