@@ -119,6 +119,24 @@ module JavaBuildpack::Container
 
     private
 
+    def install_security_policy
+      java_home = "#{@droplet.sandbox}/../open_jdk_jre"
+      security_policy.install(java_home)
+    end
+
+    # TODO Invert the control of this object
+    def security_policy
+      require 'java_buildpack/security/http_access'
+      require 'java_buildpack/security/security_manifest'
+
+      yaml_file = File.expand_path('../../../../config/security.yml', __FILE__)
+      security_manifest = SecurityManifest.new(yaml_file)
+      http_access = HttpAccess.new
+
+      @security_policy ||= SecurityPolicy.new(http_access, security_manifest)
+    end
+
+
     def container_libs_directory
       @droplet.root + '.spring-insight/container-libs'
     end
@@ -131,6 +149,15 @@ module JavaBuildpack::Container
 
     def download_tomcat
       download(@tomcat_version, @tomcat_uri) { |file| expand file }
+    end
+
+    def download_maven
+      download('3.1.1', 'http://apache.osuosl.org/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.tar.gz', 'Apache Maven') { |file|
+        FileUtils.mkdir_p "#{@droplet.sandbox}/../maven"
+        shell "tar xzf #{file.path} -C #{@droplet.sandbox}/../maven --strip 1 --exclude webapps 2>&1"
+
+        @droplet.copy_resources
+      }
     end
 
     def download_lifecycle
@@ -193,6 +220,10 @@ module JavaBuildpack::Container
 
     def web_inf?
       (@application.root + 'WEB-INF').exist?
+    end
+
+    def add_cdp_libraries_to_web_inf_lib
+      CdpDependencies.new(@droplet).add_to_web_inf_lib
     end
 
   end
