@@ -1,0 +1,4 @@
+git add .
+git ci -m "Spiking using maven to fetch dependencies - now download maven as part of the Buildpack"
+git push po master
+
