@@ -67,6 +67,7 @@ module JavaBuildpack::Container
       download_logging
       link_to(@application.root.children, root)
       do_not_depend_on_this
+      add_cdp_libraries_to_web_inf_lib
       @droplet.additional_libraries << tomcat_datasource_jar if tomcat_datasource_jar.exist?
       @droplet.additional_libraries.link_to web_inf_lib
 
