@@ -52,7 +52,7 @@ class CdpDependencies
   end
 
   def host
-    'http://192.168.3.10:8081'
+    'http://mopyz6160214.cloud.dst.ibm.com:8081/'
   end
 
   def file
@@ -68,8 +68,9 @@ class CdpDependencies
     @pom ||= begin
       @pom = '/tmp/cdp/pom.xml'
       FileUtils.mkdir_p '/tmp/cdp/'
-      resp = Net::HTTP.get_response(pom_download_path)
       print "Downloading pom from #{pom_download_path}"
+      resp = Net::HTTP.get_response(pom_download_path)
+      print "Downloaded pom from #{pom_download_path}"
       File.open(@pom, 'w') { |file| file.write(resp.body) }
       @pom
     end
