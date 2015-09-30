@@ -20,6 +20,8 @@ require 'java_buildpack/container'
 require 'java_buildpack/repository/configured_item'
 require 'java_buildpack/util/dash_case'
 require 'java_buildpack/util/java_main_utils'
+require 'java_buildpack/cdp/cdp_dependencies'
+require 'java_buildpack/security/security_policy'
 
 module JavaBuildpack::Container
 
@@ -160,7 +162,9 @@ module JavaBuildpack::Container
     end
 
     def root
-      webapps + 'ROOT'
+      context_path = ENV['contextpath'] ||= 'ROOT'
+      print "Setting context path to /#{context_path}"
+      webapps + context_path
     end
 
     def lifecycle_jar_name

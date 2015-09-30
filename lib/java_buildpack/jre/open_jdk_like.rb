@@ -65,7 +65,15 @@ module JavaBuildpack::Jre
 
     def memory
       sizes = @configuration[KEY_MEMORY_SIZES] || {}
+      sizes['heap'] = ENV['memory_size_heap'] || sizes['heap']
+      sizes['permgen'] = ENV['memory_size_permgen'] || sizes['permgen']
+      sizes['stack'] = ENV['memory_size_stack'] || sizes['stack']
+      sizes['native'] = ENV['memory_size_native'] || sizes['native']
       heuristics = @configuration[KEY_MEMORY_HEURISTICS] || {}
+      heuristics['heap'] = ENV['memory_heuristic_heap'] ? ENV['memory_heuristic_heap'].to_i : heuristics['heap']
+      heuristics['permgen'] = ENV['memory_heuristic_permgen'] ? ENV['memory_heuristic_permgen'].to_i : heuristics['permgen']
+      heuristics['stack'] = ENV['memory_heuristic_stack'] ? ENV['memory_heuristic_stack'].to_i : heuristics['stack']
+      heuristics['native'] = ENV['memory_heuristic_native'] ? ENV['memory_heuristic_native'].to_i : heuristics['native']
       OpenJDKMemoryHeuristicFactory.create_memory_heuristic(sizes, heuristics, @version).resolve
     end
 
