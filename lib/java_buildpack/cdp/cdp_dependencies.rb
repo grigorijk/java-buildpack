@@ -52,7 +52,7 @@ class CdpDependencies
   end
 
   def host
-    'http://mopyz6160214.cloud.dst.ibm.com:8081'
+    'http://gka-nexus.postofficefot.eu-gb.mybluemix.net'
   end
 
   def file
