@@ -1,5 +1,5 @@
 # Configuration for the cryptography jars that need to be installed in the Tomcat isntance
 
 ---
-local_policy_url: http://192.168.3.10:8081/nexus/content/repositories/thirdparty/com/oracle/security/local-policy/7.0/local-policy-7.0.jar
-us_export_policy: http://192.168.3.10:8081/nexus/content/repositories/thirdparty/com/oracle/security/us-export-policy/7.0/us-export-policy-7.0.jar
+local_policy_url: http://gka-nexus.postofficefot.eu-gb.mybluemix.net/local-policy-7.0.jar
+us_export_policy: http://gka-nexus.postofficefot.eu-gb.mybluemix.net/us-export-policy-7.0.jar
