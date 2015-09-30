@@ -69,6 +69,9 @@ module JavaBuildpack::Container
       do_not_depend_on_this
       @droplet.additional_libraries << tomcat_datasource_jar if tomcat_datasource_jar.exist?
       @droplet.additional_libraries.link_to web_inf_lib
+
+      install_security_policy
+
     end
 
     # @macro base_component_release
