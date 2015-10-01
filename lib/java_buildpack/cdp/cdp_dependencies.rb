@@ -19,7 +19,14 @@ class CdpDependencies
 
     print "Executing #{command}"
     `#{command} > #{maven_home}/build.log 2> #{maven_home}/error.log`
-
+  
+    file = File.open("#{maven_home}/build.log")
+    file.each {|line|
+     print line
+     print "\n"
+    }
+    file.close
+    
     # DO MAVEN COPY (PART 2)
     command = "export #{java_home}; \\
     #{maven_home}/bin/mvn \\
@@ -29,7 +36,7 @@ class CdpDependencies
               -DoutputDirectory=#{output_directory}"
 
     print "Executing #{command}"
-    `#{command} > #{maven_home}/build2.log 2> #{maven_home}/error2.log`
+#    `#{command} > #{maven_home}/build2.log 2> #{maven_home}/error2.log`
     Dir["#{output_directory}/*"]
   end
 
