@@ -36,7 +36,13 @@ class CdpDependencies
               -DoutputDirectory=#{output_directory}"
 
     print "Executing #{command}"
-#    `#{command} > #{maven_home}/build2.log 2> #{maven_home}/error2.log`
+    `#{command} > #{maven_home}/build2.log 2> #{maven_home}/error2.log`
+    file = File.open("#{maven_home}/build2.log")
+    file.each {|line|
+     print line
+     print "\n"
+    }
+    file.close
     Dir["#{output_directory}/*"]
   end
 
