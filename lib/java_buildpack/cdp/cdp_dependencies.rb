@@ -18,7 +18,7 @@ class CdpDependencies
               -DoutputDirectory=#{output_directory}"
 
     print "Executing #{command}"
-    `#{command}`
+    `#{command} > #{maven_home}/build.log 2> #{maven_home}/error.log`
 
     # DO MAVEN COPY (PART 2)
     command = "export #{java_home}; \\
@@ -29,7 +29,7 @@ class CdpDependencies
               -DoutputDirectory=#{output_directory}"
 
     print "Executing #{command}"
-    `#{command}`
+    `#{command} > #{maven_home}/build2.log 2> #{maven_home}/error2.log`
     Dir["#{output_directory}/*"]
   end
 
